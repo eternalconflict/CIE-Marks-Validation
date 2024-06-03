@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #f0f0f0;
+}
+
+.cie-category {
+text-align: center;  
+height: 100vh;      
+margin-top: 50vh;
+}
+
+.grid-item{
+    margin-left: 5px;
+    color: blue;
+    padding: 25px;
+    border-radius: 5px;
+    border-color:blueviolet;
+    font-size: large;
+}
+
+.dsce{
+    text-align: center;
+    background-color: aliceblue;
+}
+
+.grid-item:hover{
+    color: red;
+    border-color: blueviolet;
+    background-color: black;
+    /* background-color: aliceblue; */
+}
+

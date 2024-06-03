@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Continuous Internal IA Marks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        
+       .container {
+            width: 80%;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+       .form-group {
+            margin-bottom: 20px;
+        }
+        
+       .label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+       .input-field {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+        
+       .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        
+       .marks-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+       .marks-table th,.marks-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        
+       .marks-table th {
+            background-color: #f0f0f0;
+        }
+
+        .low-marks{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Continuous Internal IA Marks</h2>
+        <form id="marks-form">
+            <div class="form-group">
+                <label class="label" for="student-name">Student Name:</label>
+                <input type="text" id="student-name" class="input-field" required>
+                <div class="error-message" id="student-name-error"></div>
+            </div>
+            <div class="form-group">
+                <label class="label" for="usn">USN:</label>
+                <input type="text" id="usn" class="input-field" required pattern="[1-9][A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{3}" maxlength="10">
+                <div class="error-message" id="usn-error">Please enter USN in the format 1DS21IS001 (10 characters only)</div>
+            </div>
+            <div class="form-group">
+                <label class="label" for="IA-1">IA 1 (out of 50):</label>
+                <input type="number" id="IA-1" class="input-field" required min="0" max="50">
+                <!-- <div class="error-message" id="IA-1-error"></div> -->
+            </div>
+            <div class="form-group">
+                <label class="label" for="IA-2">IA 2 (out of 50):</label>
+                <input type="number" id="IA-2" class="input-field" required min="0" max="50">
+                <!-- <div class="error-message" id="IA-2-error"></div> -->
+            </div>
+            <div class="form-group">
+                <label class="label" for="IA-3">IA 3 (out of 50):</label>
+                <input type="number" id="IA-3" class="input-field" required min="0" max="50">
+                <!-- <div class="error-message" id="IA-3-error"></div> -->
+            </div>
+            <div class="form-group">
+                <label class="label" for="Quiz">Enter Quiz Marks:</label>
+                <input type="number" id="quiz" class="input-field" required min="0" max="30">
+                <!-- <div class="error-message" id="IA-3-error"></div> -->
+            </div>
+            <div class="form-group">
+                <AAT class="label" for="AAT">Enter AAT Marks:</label>
+                <input type="number" id="aat" class="input-field" required min="0" max="10">
+                <!-- <div class="error-message" id="IA-3-error"></div> -->
+            </div>
+            <div class="form-group">
+                <AAT class="label" for="attendance">Enter Attendance:</label>
+                <input type="number" id="attendance" class="input-field" required min="0" max="40">
+                <!-- <div class="error-message" id="IA-3-error"></div> -->
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        
+        <h2>Marks Display</h2>
+        <table class="marks-table" border="1">
+            <thead>
+                <tr>
+                    <th>USN</th>
+                    <th>Student Name</th>
+                    <th>IA 1</th>
+                    <th>IA 2</th>
+                    <th>IA 3</th>
+                    <th>TOT(30)</th>
+                    <th>Quiz(30)</th>
+                    <th>Quiz(10)</th>
+                    <th>AAT</th>
+                    <th>Quiz+AAT(20)</th>
+                    <th>Final TOT(50)</th>
+                    <th>Attendance(40)</th>
+                </tr>
+            </thead>
+            <tbody id="marks-display">
+                
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        const form = document.getElementById('marks-form');
+        const studentNameInput = document.getElementById('student-name');
+        const usnInput = document.getElementById('usn');
+        const IA1Input = document.getElementById('IA-1');
+        const IA2Input = document.getElementById('IA-2');
+        const IA3Input = document.getElementById('IA-3');
+        const quizInput = document.getElementById('quiz');
+        const aatInput = document.getElementById('aat');
+        const attendanceInput = document.getElementById('attendance');
+        const marksDisplay = document.getElementById('marks-display');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            displayMarks();
+        });
+
+        function displayMarks() {
+            const studentName = studentNameInput.value;
+            const usn = usnInput.value;
+            const IA1 = parseFloat(IA1Input.value)/5;
+            const IA2 = parseFloat(IA2Input.value/5);
+            const IA3 = parseFloat(IA3Input.value)/5;
+            const quiz = parseFloat(quizInput.value);
+            const aat = parseFloat(aatInput.value);
+            const attendance = attendanceInput.value;
+            const average = ((IA1 + IA2 + IA3) / 3).toFixed(2);
+            // const result = (average >= 25) ? 'Pass' : 'Fail';
+            const tot30 = ((IA1 + IA2 + IA3));
+            const quiz10 = quiz/3;
+            const quizaat = quiz10 + aat;
+            const finaltot = tot30 + quizaat;
+            let finaltotclass;
+            if(finaltot < 20)
+            {
+                finaltotclass = 'low-marks';
+            }
+            else{
+                finaltotclass = '';
+            }
+
+
+
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${usn}</td>
+                <td>${studentName}</td>
+                <td>${IA1}</td>
+                <td>${IA2}</td>
+                <td>${IA3}</td>
+                <td>${tot30}</td>
+                <td>${quiz}</td>
+                <td>${quiz10}</td>
+                <td>${aat}</td>
+                <td>${quizaat}</td>
+                <td class = "${finaltotclass}">${finaltot}</td>
+                <td>${attendance}</td>
+            `;
+            marksDisplay.appendChild(newRow);
+            
+            form.reset();
+        }
+    </script>
+ </body>
